@@ -1,0 +1,32 @@
+﻿@model kursatch.Models.GraphModel
+
+<h2>Graph Generator</h2>
+
+<form method="post" asp-action="GenerateGraph">
+    <div class="form-group">
+        <label asp-for="Equation">Enter Equation:</label>
+        <input asp-for="Equation" class="form-control" />
+        <span asp-validation-for="Equation" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Generate Graph</button>
+</form>
+
+<div>
+    @if (!string.IsNullOrEmpty(Model.ChartData))
+    {
+            <h3>Equation:</h3>
+            <p>@Model.Equation</p>
+
+            <h3>Graph:</h3>
+            <canvas id="myChart" width="400" height="200"></canvas>
+
+            <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var chartData = @Html.Raw(Model.ChartData);
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: chartData
+                });
+            </script>
+    }
+</div>
